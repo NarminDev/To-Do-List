@@ -1,26 +1,29 @@
-
 const container = document.createElement("div");
-document.body.appendChild(container);
 container.classList.add("container");
+document.body.appendChild(container);
+
 
 const title = document.createElement("h2");
 title.textContent = "To Do List";
 title.classList.add("title");
 container.appendChild(title);
 
-const inputRow = document.createElement("div");
-inputRow.classList.add("input-row");
+
+const form = document.createElement("form");
+form.classList.add("input-row");
 
 const input = document.createElement("input");
 input.placeholder = "Add new task";
 input.classList.add("input");
 
 const addBtn = document.createElement("button");
-addBtn.textContent = "+";
+addBtn.textContent = "Add";
 addBtn.classList.add("add-btn");
+addBtn.type = "submit";
 
-inputRow.append(input, addBtn);
-container.appendChild(inputRow);
+form.append(input, addBtn);
+container.appendChild(form);
+
 
 const ul = document.createElement("ul");
 ul.classList.add("list");
@@ -49,10 +52,17 @@ function addTask() {
     removeBtn.textContent = "✖";
     removeBtn.classList.add("remove");
 
+
     doneBtn.addEventListener("click", function () {
-        text.style.textDecoration = "line-through";
-        text.style.color = "green";
+        if (text.style.textDecoration === "line-through") {
+            text.style.textDecoration = "none";
+            text.style.color = "black";
+        } else {
+            text.style.textDecoration = "line-through";
+            text.style.color = "green";
+        }
     });
+
 
     removeBtn.addEventListener("click", function () {
         li.remove();
@@ -64,11 +74,7 @@ function addTask() {
     input.value = "";
 }
 
-
-addBtn.addEventListener("click", addTask);
-
-input.addEventListener("keypress", function (e) {
-    if (e.key === "Enter") {
-        addTask();
-    }
+form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    addTask();
 });
